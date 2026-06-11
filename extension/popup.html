@@ -3,45 +3,30 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Session Capture</title>
+    <title>Store to Hermes Vault</title>
     <link rel="stylesheet" href="popup.css">
   </head>
   <body>
     <main>
       <header>
-        <h1>Session Capture</h1>
+        <h1>Store to Hermes Vault</h1>
         <span id="statusDot" class="dot"></span>
       </header>
 
       <section class="panel">
-        <div class="label">Active tab</div>
+        <div class="label">Current site</div>
         <div id="activeTab" class="value">Loading...</div>
       </section>
 
       <section class="panel">
-        <label for="vaultUrl">Vault URL</label>
-        <input id="vaultUrl" type="url" value="https://social.149.28.133.149.sslip.io/capture">
-        <label for="apiToken">Admin token</label>
-        <input id="apiToken" type="password" placeholder="Paste vault admin token" autocomplete="off">
+        <label for="username">Username / email</label>
+        <input id="username" type="text" autocomplete="username" placeholder="Login username for this site">
+        <label for="password">Password</label>
+        <input id="password" type="password" autocomplete="current-password" placeholder="Login password for this site">
       </section>
 
-      <section class="panel">
-        <label class="check">
-          <input id="includeSessionStorage" type="checkbox" checked>
-          <span>Include sessionStorage snapshot</span>
-        </label>
-      </section>
-
-      <section class="panel">
-        <label for="username">Saved login</label>
-        <input id="username" type="text" autocomplete="username" placeholder="Username or email">
-        <input id="password" type="password" autocomplete="current-password" placeholder="Password">
-      </section>
-
-      <button id="captureBtn" type="button">Capture This Site</button>
-      <button id="restoreBtn" class="secondary" type="button">Restore Latest For This Site</button>
-      <button id="saveCredentialBtn" class="secondary" type="button">Save Login For This Site</button>
-      <button id="fillCredentialBtn" class="secondary" type="button">Fill Saved Login</button>
+      <button id="storeBtn" type="button">Store to Hermes VPS Vault</button>
+      <div class="hint">Saves the session cookies <strong>and</strong> the username + password for this site to your VPS vault.</div>
 
       <pre id="output" aria-live="polite"></pre>
     </main>

@@ -111,6 +111,13 @@ button.secondary {
   background: #d7deea;
 }
 
+.hint {
+  margin: -2px 2px 0;
+  color: #4c5565;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
 pre {
   min-height: 68px;
   max-height: 180px;
