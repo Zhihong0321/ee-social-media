@@ -12,7 +12,7 @@ After=network.target
 
 [Service]
 Type=simple
-User=hermes
+User=root
 WorkingDirectory=/opt/ee-social-media
 EnvironmentFile=/etc/ee-social-media.env
 # Bind to localhost only; Caddy is the public TLS front door.

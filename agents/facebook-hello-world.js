@@ -31,6 +31,10 @@ async function runFacebookHelloWorld(options = {}) {
     userAgent: capture?.browser?.userAgent
   };
   if (channel) launchOptions.channel = channel;
+  // Chrome refuses to run as root without --no-sandbox; the VPS service runs as root.
+  if (process.platform === "linux") {
+    launchOptions.args = ["--no-sandbox", "--disable-dev-shm-usage"];
+  }
 
   console.log(`[agent] launching sandboxed browser profile (channel: ${channel || "bundled chromium"}, headless: ${headless})`);
   const context = await chromium.launchPersistentContext(PROFILE_DIR, launchOptions);

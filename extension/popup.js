@@ -36,7 +36,7 @@ async function saveSettings() {
 
 async function loadSettings() {
   const settings = await chrome.storage.local.get({
-    vaultUrl: "https://149.28.133.149.sslip.io/capture",
+    vaultUrl: "https://social.149.28.133.149.sslip.io/capture",
     apiToken: "",
     includeSessionStorage: true
   });
