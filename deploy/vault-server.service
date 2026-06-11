@@ -15,12 +15,13 @@ Type=simple
 User=root
 WorkingDirectory=/opt/ee-social-media
 EnvironmentFile=/etc/ee-social-media.env
-# Bind to localhost only; Caddy is the public TLS front door.
+# Bind to localhost only; nginx is the public TLS front door.
 Environment=VAULT_HOST=127.0.0.1
 Environment=VAULT_PORT=47321
 # Run the posting browser headed under a virtual display (set USE_XVFB=0 to disable).
 Environment=USE_XVFB=1
-ExecStart=/usr/bin/node /opt/ee-social-media/vault-server/server.js
+# NOTE: setup-vps.sh rewrites this ExecStart with the detected `node` path.
+ExecStart=/usr/local/bin/node /opt/ee-social-media/vault-server/server.js
 Restart=on-failure
 RestartSec=3
 

@@ -1,7 +1,12 @@
 # Hermes VPS Setup Guide
 
 First-time setup to run the EE Social vault + posting agent on your Hermes VPS
-(`149.28.133.149`, Ubuntu 24.04), reachable at `https://149.28.133.149.sslip.io`.
+(`149.28.133.149`, Ubuntu 24.04), reachable at `https://social.149.28.133.149.sslip.io`.
+
+> This VPS already runs **nginx** with `*.sslip.io` subdomains (open-webui,
+> hermes-dashboard, etc.). We integrate with that instead of installing Caddy:
+> the vault server listens on `127.0.0.1:47321` and nginx proxies the
+> `social.<ip>.sslip.io` subdomain to it, with Let's Encrypt TLS via certbot.
 
 End state:
 - Laptop Chrome extension captures a logged-in session and pushes it to the VPS.
@@ -30,14 +35,12 @@ bash setup-vps.sh
 
 The script (see [`deploy/setup-vps.sh`](../deploy/setup-vps.sh)) is idempotent and:
 
-1. Installs Node 20, Git, Chrome, xvfb.
-2. Clones the repo to `/opt/ee-social-media`.
-3. `npm ci` + `playwright install --with-deps chromium`.
-4. **Generates an admin token** and prints it — copy it now.
-5. Installs and starts the `vault-server` **systemd** service (localhost:47321).
-6. Installs **Caddy**, which gets a real HTTPS cert for `149.28.133.149.sslip.io`
-   and reverse-proxies to the vault server.
-7. Opens firewall ports 80/443 if `ufw` is active.
+1. Clones the repo to `/opt/ee-social-media` and runs `npm install`.
+2. Installs Google Chrome + xvfb (and Playwright's chromium as fallback).
+3. **Generates an admin token** and prints it — copy it now.
+4. Installs and starts the `ee-social` **systemd** service (localhost:47321).
+5. Adds an nginx site for `social.149.28.133.149.sslip.io` → the vault server.
+6. Runs **certbot** to get a Let's Encrypt cert for that subdomain (HTTPS + redirect).
 
 When it finishes you'll see your admin token and the URL.
 
@@ -46,11 +49,11 @@ When it finishes you'll see your admin token and the URL.
 ## Verify
 
 ```bash
-systemctl status vault-server          # should be active (running)
-curl https://149.28.133.149.sslip.io/health   # {"ok":true,...}
+systemctl status ee-social          # should be active (running)
+curl https://social.149.28.133.149.sslip.io/health   # {"ok":true,...}
 ```
 
-Open `https://149.28.133.149.sslip.io/` in a browser → paste the admin token → unlock.
+Open `https://social.149.28.133.149.sslip.io/` in a browser → paste the admin token → unlock.
 
 ---
 
@@ -59,7 +62,7 @@ Open `https://149.28.133.149.sslip.io/` in a browser → paste the admin token �
 1. Load the extension (Chrome → `chrome://extensions` → Developer mode → Load
    unpacked → select the `extension/` folder).
 2. Open the extension popup and set:
-   - **Vault URL**: `https://149.28.133.149.sslip.io/capture`
+   - **Vault URL**: `https://social.149.28.133.149.sslip.io/capture`
    - **Admin token**: the same token from setup.
 3. Log in to a platform (e.g. Facebook) in a normal tab → click **Capture This Site**.
 4. In the VPS web UI, the capture appears under **Captures**.
@@ -82,14 +85,14 @@ The agent restores the latest capture, logs in if needed, posts, and shows scree
 
 ```bash
 # Logs
-journalctl -u vault-server -f
+journalctl -u ee-social -f
 
 # Restart after pulling new code
-cd /opt/ee-social-media && sudo git pull --ff-only && sudo systemctl restart vault-server
+cd /opt/ee-social-media && git pull --ff-only && systemctl restart ee-social
 
 # Rotate the admin token
-sudo sed -i "s/VAULT_SECRET=.*/VAULT_SECRET=$(openssl rand -hex 32)/" /etc/ee-social-media.env
-sudo systemctl restart vault-server     # then update the token in the UI + extension
+sed -i "s/VAULT_SECRET=.*/VAULT_SECRET=$(openssl rand -hex 32)/" /etc/ee-social-media.env
+systemctl restart ee-social     # then update the token in the UI + extension
 ```
 
 ## Security notes
