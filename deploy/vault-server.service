@@ -1,0 +1,28 @@
+# systemd unit for the EE Social vault server.
+# Install: /etc/systemd/system/vault-server.service
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now vault-server
+#
+# Edit User, WorkingDirectory, and the install path to match your VPS.
+# The admin token is read from /etc/ee-social-media.env (see setup-vps.sh).
+
+[Unit]
+Description=EE Social Media vault server
+After=network.target
+
+[Service]
+Type=simple
+User=hermes
+WorkingDirectory=/opt/ee-social-media
+EnvironmentFile=/etc/ee-social-media.env
+# Bind to localhost only; Caddy is the public TLS front door.
+Environment=VAULT_HOST=127.0.0.1
+Environment=VAULT_PORT=47321
+# Run the posting browser headed under a virtual display (set USE_XVFB=0 to disable).
+Environment=USE_XVFB=1
+ExecStart=/usr/bin/node /opt/ee-social-media/vault-server/server.js
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

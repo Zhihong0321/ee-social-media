@@ -1,0 +1,125 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  width: 360px;
+  margin: 0;
+  color: #141414;
+  background: #f6f7f9;
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+}
+
+main {
+  padding: 14px;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+h1 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: #999;
+}
+
+.dot.ok {
+  background: #0a8f48;
+}
+
+.dot.fail {
+  background: #bd2727;
+}
+
+.panel {
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #d9dde4;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.label,
+label {
+  display: block;
+  margin-bottom: 6px;
+  color: #4c5565;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.value {
+  overflow-wrap: anywhere;
+  line-height: 1.35;
+}
+
+input[type="url"],
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 8px;
+  border: 1px solid #c7ced9;
+  border-radius: 5px;
+  font: inherit;
+}
+
+input:last-child {
+  margin-bottom: 0;
+}
+
+.check {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin: 0;
+  color: #141414;
+  font-weight: 400;
+}
+
+button {
+  width: 100%;
+  height: 38px;
+  margin-bottom: 8px;
+  border: 0;
+  border-radius: 6px;
+  color: #fff;
+  background: #1d4ed8;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: progress;
+  opacity: 0.65;
+}
+
+button.secondary {
+  color: #172033;
+  background: #d7deea;
+}
+
+pre {
+  min-height: 68px;
+  max-height: 180px;
+  overflow: auto;
+  margin: 12px 0 0;
+  padding: 10px;
+  border-radius: 6px;
+  color: #0f172a;
+  background: #e9edf4;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}

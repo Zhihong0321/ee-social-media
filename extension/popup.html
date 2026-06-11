@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Session Capture</title>
+    <link rel="stylesheet" href="popup.css">
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>Session Capture</h1>
+        <span id="statusDot" class="dot"></span>
+      </header>
+
+      <section class="panel">
+        <div class="label">Active tab</div>
+        <div id="activeTab" class="value">Loading...</div>
+      </section>
+
+      <section class="panel">
+        <label for="vaultUrl">Vault URL</label>
+        <input id="vaultUrl" type="url" value="https://149.28.133.149.sslip.io/capture">
+        <label for="apiToken">Admin token</label>
+        <input id="apiToken" type="password" placeholder="Paste vault admin token" autocomplete="off">
+      </section>
+
+      <section class="panel">
+        <label class="check">
+          <input id="includeSessionStorage" type="checkbox" checked>
+          <span>Include sessionStorage snapshot</span>
+        </label>
+      </section>
+
+      <section class="panel">
+        <label for="username">Saved login</label>
+        <input id="username" type="text" autocomplete="username" placeholder="Username or email">
+        <input id="password" type="password" autocomplete="current-password" placeholder="Password">
+      </section>
+
+      <button id="captureBtn" type="button">Capture This Site</button>
+      <button id="restoreBtn" class="secondary" type="button">Restore Latest For This Site</button>
+      <button id="saveCredentialBtn" class="secondary" type="button">Save Login For This Site</button>
+      <button id="fillCredentialBtn" class="secondary" type="button">Fill Saved Login</button>
+
+      <pre id="output" aria-live="polite"></pre>
+    </main>
+    <script src="popup.js"></script>
+  </body>
+</html>

@@ -1,0 +1,15 @@
+# Caddy reverse proxy for the EE Social vault server.
+# sslip.io resolves 149.28.133.149.sslip.io -> 149.28.133.149, so Caddy can
+# obtain a real Let's Encrypt certificate automatically (needs ports 80 + 443 open).
+#
+# Install: /etc/caddy/Caddyfile  then  `sudo systemctl reload caddy`
+
+149.28.133.149.sslip.io {
+	encode gzip
+	reverse_proxy 127.0.0.1:47321
+
+	# Cap upload size to match the server's 25 MB capture limit (a bit of headroom).
+	request_body {
+		max_size 30MB
+	}
+}

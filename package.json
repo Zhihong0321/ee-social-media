@@ -1,0 +1,24 @@
+{
+  "name": "ee-social-media",
+  "version": "1.0.0",
+  "description": "This project starts with a Chrome extension plus a local vault server.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./vault-server/server.js",
+    "vault": "node ./vault-server/server.js",
+    "fb:hello": "node ./agents/facebook-hello-world.js",
+    "fb:hello:cli": "playwright test tests/facebook-hello-world.spec.js --project=chrome",
+    "google:auth": "playwright test tests/google-auth.spec.js --project=chrome",
+    "m3:browser-smoke": "node ./agents/minimax-m3-browser-smoke.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "playwright": "^1.60.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.60.0"
+  }
+}

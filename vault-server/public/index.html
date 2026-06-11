@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>EE Social Vault</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <!-- Login gate: ask for the admin token, verify it against /auth/check. -->
+    <div id="login" class="login">
+      <form id="loginForm" class="login-card">
+        <h1>EE Social Vault</h1>
+        <p class="muted">Enter your admin token to manage captured sessions and logins.</p>
+        <input id="tokenInput" type="password" placeholder="Admin token" autocomplete="off" />
+        <label class="check"><input id="remember" type="checkbox" checked /> Remember on this device</label>
+        <button type="submit">Unlock</button>
+        <div id="loginError" class="error"></div>
+      </form>
+    </div>
+
+    <!-- Main app (hidden until authorized). -->
+    <div id="app" class="app hidden">
+      <header class="topbar">
+        <div class="brand">EE Social Vault</div>
+        <nav class="tabs">
+          <button class="tab active" data-tab="captures">Captures</button>
+          <button class="tab" data-tab="credentials">Logins</button>
+          <button class="tab" data-tab="post">Post</button>
+        </nav>
+        <button id="logout" class="ghost">Lock</button>
+      </header>
+
+      <main>
+        <!-- Captures -->
+        <section id="tab-captures" class="tabpane">
+          <div class="pane-head">
+            <h2>Captured sessions</h2>
+            <button id="refreshCaptures" class="ghost">Refresh</button>
+          </div>
+          <p class="muted">Live browser sessions pushed from the laptop extension. Treat as passwords.</p>
+          <div id="capturesList" class="cards"></div>
+        </section>
+
+        <!-- Credentials -->
+        <section id="tab-credentials" class="tabpane hidden">
+          <div class="pane-head">
+            <h2>Saved logins</h2>
+            <button id="refreshCreds" class="ghost">Refresh</button>
+          </div>
+          <form id="credForm" class="cred-form">
+            <input id="credHost" type="text" placeholder="hostname (e.g. facebook.com)" />
+            <input id="credUser" type="text" placeholder="username or email" autocomplete="off" />
+            <input id="credPass" type="password" placeholder="password" autocomplete="new-password" />
+            <button type="submit">Save login</button>
+          </form>
+          <div id="credsList" class="cards"></div>
+        </section>
+
+        <!-- Post -->
+        <section id="tab-post" class="tabpane hidden">
+          <div class="pane-head"><h2>Run a posting agent</h2></div>
+          <form id="postForm" class="post-form">
+            <label>Platform
+              <select id="postPlatform"><option value="facebook">facebook</option></select>
+            </label>
+            <label>Post text
+              <input id="postText" type="text" placeholder="Hello world" />
+            </label>
+            <button type="submit" id="postRun">Post now</button>
+          </form>
+          <p class="muted">The agent restores the latest capture, logs in if needed, and posts. Screenshots appear below.</p>
+          <pre id="postLog" class="log"></pre>
+          <div id="postShots" class="shots"></div>
+        </section>
+      </main>
+    </div>
+
+    <div id="toast" class="toast hidden"></div>
+    <script src="/app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,7 @@
+vault-data/
+node_modules/
+*.log
+.secret
+.env
+*.env
+.DS_Store
