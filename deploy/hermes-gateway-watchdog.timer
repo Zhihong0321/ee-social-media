@@ -1,0 +1,14 @@
+# Fires the watchdog every 2 minutes (and shortly after boot).
+# Install: /etc/systemd/system/hermes-gateway-watchdog.timer
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now hermes-gateway-watchdog.timer
+[Unit]
+Description=Run Hermes gateway watchdog every 2 minutes
+
+[Timer]
+OnBootSec=2min
+OnUnitActiveSec=2min
+AccuracySec=15s
+
+[Install]
+WantedBy=timers.target

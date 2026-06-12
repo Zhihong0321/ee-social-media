@@ -1,0 +1,9 @@
+# Oneshot unit run by hermes-gateway-watchdog.timer every 2 minutes.
+# Install: /etc/systemd/system/hermes-gateway-watchdog.service
+[Unit]
+Description=Hermes gateway crash-loop watchdog (auto-heal)
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/hermes-gateway-watchdog.sh
